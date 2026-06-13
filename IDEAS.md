@@ -8,7 +8,7 @@ This file tracks advanced concepts and features to be implemented for the **RPDe
 - [x] **Secret Scanning:** Implement automated secret scanning across both accounts to prevent credential leaks.
 
 ## 🏗️ Infrastructure & Build
-- [ ] **GitHub Container Registry (GHCR):** Migrate build artifacts to `ghcr.io` for versioned OCI image hosting.
+- [x] **GitHub Container Registry (GHCR):** Migrate build artifacts to `ghcr.io` for versioned OCI image hosting.
 - [x] **Environment Protection:** Implement GitHub Environments with manual approval gates for sensitive automation runs.
 - [x] **Artifact Lifecycle Manager:** Automatically prune old build artifacts to stay within storage limits.
 
