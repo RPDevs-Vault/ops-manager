@@ -33,8 +33,36 @@ jobs:
           REPORT+="| **Total Forks** | $TOTAL_FORKS |\n"
           REPORT+="| **Standalone Projects** | $TOTAL_STANDALONE |\n"
           REPORT+="| **Archived Projects** | $TOTAL_ARCHIVED |\n\n"
-          
-          # Find potentially unhealthy repos (Missing Description or extremely old)
+
+          # Fetch Build Fleet Status
+          REPORT+="## 🚀 Build Fleet Status (container-manager)\n\n"
+          REPORT+="| Workflow | Status | Last Run |\n"
+          REPORT+="| :--- | :--- | :--- |\n"
+
+          BUILDS=$(gh run list --repo RPDevs-Vault/container-manager --limit 5 --json name,conclusion,status,createdAt,url --jq '.[]')
+          if [[ ! -z "$BUILDS" ]]; then
+            echo "$BUILDS" | jq -c '.' | while read -r run; do
+              NAME=$(echo "$run" | jq -r '.name')
+              CONC=$(echo "$run" | jq -r '.conclusion // .status')
+              DATE=$(echo "$run" | jq -r '.createdAt')
+              URL=$(echo "$run" | jq -r '.url')
+
+              case "$CONC" in
+                success) ICON="✅" ;;
+                failure) ICON="❌" ;;
+                cancelled) ICON="⚪" ;;
+                *) ICON="⏳" ;;
+              esac
+
+              REPORT+="| [$NAME]($URL) | $ICON $CONC | $DATE |\n"
+            done
+          else
+            REPORT+="| No recent builds found | - | - |\n"
+          fi
+          REPORT+="\n"
+
+          # Find potentially unhealthy repos
+ (Missing Description or extremely old)
           UNHEALTHY=$(echo "$REPOS" | jq -r '.[] | select(.isArchived == false) | select(.description == null or .description == "") | .nameWithOwner')
           
           REPORT+="### ⚠️ Attention Required\n"
