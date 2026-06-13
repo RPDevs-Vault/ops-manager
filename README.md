@@ -27,6 +27,39 @@ Repository for managing the **RPDevs Vault** organization. This project serves a
 ---
 
 <!-- HEALTH_DASHBOARD_START -->
+## 🛡️ Repository Health Overview
+
+| Metric | Count |
+| :--- | :--- |
+| **Total Repositories** | 21 |
+| **Total Forks** | 0 |
+| **Standalone Projects** | 21 |
+| **Archived Projects** | 0 |
+
+### ⚠️ Attention Required
+The following repositories are missing descriptions:
+- `IamRPDev/iamrpdev.github.io`
+- `IamRPDev/dotfiles`
+- `IamRPDev/openwrt-blackhole-feed`
+- `IamRPDev/mkdocs_wiki.iamrpdev.github.io`
+- `IamRPDev/hugo_main.iamrpdev.github.io`
+- `IamRPDev/blackhole-server`
+- `IamRPDev/luci-app-blackhole`
+- `IamRPDev/llmdata-core`
+- `IamRPDev/netboot_menu`
+- `IamRPDev/llm-project`
+- `IamRPDev/llm-thinktank`
+- `IamRPDev/cinn-agent-monitor`
+- `IamRPDev/cyan-resonance`
+- `IamRPDev/.github`
+- `IamRPDev/otaku-docker`
+- `IamRPDev/otaku-ui`
+- `IamRPDev/otaku-api`
+- `IamRPDev/RPDev-Archive`
+- `IamRPDev/codex-arcana`
+- `IamRPDev/rf-board-tv`
+- `IamRPDev/FenlightAnonyMouse.github.io`
+
 <!-- HEALTH_DASHBOARD_END -->
 
 ## 📋 Management Tasks
