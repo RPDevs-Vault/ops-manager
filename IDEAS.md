@@ -10,7 +10,7 @@ This file tracks advanced concepts and features to be implemented for the **Dick
 ## 🏗️ Infrastructure & Build
 - [ ] **GitHub Container Registry (GHCR):** Migrate build artifacts to `ghcr.io` for versioned OCI image hosting.
 - [ ] **Environment Protection:** Implement GitHub Environments with manual approval gates for sensitive automation runs.
-- [ ] **Artifact Lifecycle Manager:** Automatically prune old build artifacts to stay within storage limits.
+- [x] **Artifact Lifecycle Manager:** Automatically prune old build artifacts to stay within storage limits.
 
 ## ⚖️ Governance
 - [x] **Global Repository Rulesets:** Enforce branch protection (no force-pushes, no deletions) across all repositories using a single org-level rule.
