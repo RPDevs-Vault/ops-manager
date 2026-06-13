@@ -1,0 +1,22 @@
+name: Sync All Forks
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Daily at midnight
+  workflow_dispatch: # Allow manual triggers
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync Forks
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get all forked repositories in the organization
+          REPOS=$(gh repo list Dick-s-Vault --limit 1000 --json nameWithOwner,isFork --jq '.[] | select(.isFork == true) | .nameWithOwner')
+
+          for repo in $REPOS; do
+            echo "Syncing $repo..."
+            gh repo sync "$repo" || echo "Failed to sync $repo"
+          done
