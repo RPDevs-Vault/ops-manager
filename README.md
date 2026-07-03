@@ -1,6 +1,9 @@
-# vault-manager
+# 🏛️ Vault Manager — Tier 1: Organization Governance
 
-Repository for managing the **RPDevs Vault** organization. This project serves as the central command center for automation, governance, and status reporting across all 260+ repositories.
+Welcome to the **vault-manager** dashboard. This repository serves as the Tier 1 Command Hub for organization-wide governance, automated fork synchronization, notification streamlining, and repository policy enforcement within the **RPDevs-Vault**.
+
+* **Global Systems Cockpit:** [github-manager](https://github.com/RPDevs-Vault/github-manager) (Live Health & Fleet Runners)
+* **Active Project Roadmap:** [project-manager](https://github.com/RPDevs-Vault/project-manager) (Task & Issue Sync)
 
 ---
 
