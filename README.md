@@ -2,10 +2,11 @@
 
 Welcome to the **vault-manager** dashboard. This repository serves as the Tier 1 Command Hub for organization-wide governance, automated fork synchronization, notification streamlining, and repository policy enforcement within the **RPDevs-Vault**.
 
-* **Tier 0 Global Cockpit:** [github-manager](https://github.com/RPDevs-Vault/github-manager) (Live Health & Fleet Runners)
-* **Tier 2 Builder Fleet:** [container-manager](https://github.com/RPDevs-Vault/container-manager) (CI/CD & Registries)
-* **Tier 3 Project Roadmap:** [project-manager](https://github.com/RPDevs-Vault/project-manager) (Task & Issue Sync)
-* **Tier 4 Release Gateway:** [distributor-manager](https://github.com/RPDevs-Vault/distributor-manager) (Artifact Distribution)
+* **Tier 0:** [github-manager](https://github.com/RPDevs-Vault/github-manager) | **Tier 0.5:** [monitor-manager](https://github.com/RPDevs-Vault/monitor-manager)
+* **Tier 1:** [vault-manager](https://github.com/RPDevs-Vault/vault-manager) | **Tier 1.5:** [identity-manager](https://github.com/RPDevs-Vault/identity-manager)
+* **Tier 2:** [container-manager](https://github.com/RPDevs-Vault/container-manager) | **Tier 3:** [project-manager](https://github.com/RPDevs-Vault/project-manager)
+* **Tier 4:** [distributor-manager](https://github.com/RPDevs-Vault/distributor-manager) | **Tier 4.5:** [deploy-manager](https://github.com/RPDevs-Vault/deploy-manager)
+* **Tier 5:** [thought-manager](https://github.com/RPDevs-Vault/thought-manager)
 
 ---
 
