@@ -77,6 +77,42 @@ def generate_dashboard(token):
         lines.append("### 🖥️ Self-Hosted Runner Fleet")
         lines.append("*No active self-hosted runners discovered or unauthorized access.*\n")
 
+    # 2.5 Hardware Telemetry
+    import glob
+    telemetry_dirs = [
+        "/mnt/sharedroot/github_runners/shared/telemetry",
+        "/home/llmuser/projects/managers/github-manager/telemetry"
+    ]
+    telemetry_files = []
+    for d in telemetry_dirs:
+        if os.path.exists(d):
+            telemetry_files.extend(glob.glob(os.path.join(d, "*_telemetry.json")))
+            
+    if telemetry_files:
+        lines.append("### 🌡️ Hardware Telemetry")
+        lines.append("| Hostname | CPU | Memory | Shared Disk | Temperatures | Last Updated |")
+        lines.append("| :--- | :--- | :--- | :--- | :--- | :--- |")
+        for t_file in telemetry_files:
+            try:
+                with open(t_file, "r") as f:
+                    data = json.load(f)
+                host = data.get("hostname", "Unknown")
+                cpu = f"{data.get('cpu_percent', 0)}%"
+                mem = f"{data.get('memory_percent', 0)}%"
+                disk = f"{data.get('sharedroot_disk_percent', 0)}%"
+                temps_raw = data.get("temperatures", {})
+                temps = ", ".join([f"{k}: {v}°C" for k, v in temps_raw.items()]) if temps_raw else "N/A"
+                ts = data.get("timestamp", "")
+                if ts:
+                    dt = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                    ts_str = dt.strftime('%H:%M:%S UTC')
+                else:
+                    ts_str = "Unknown"
+                lines.append(f"| `{host}` | {cpu} | {mem} | {disk} | {temps} | {ts_str} |")
+            except Exception as e:
+                print(f"Error reading {t_file}: {e}", file=sys.stderr)
+        lines.append("")
+
     # 3. Manager Repos Workflow Health
     lines.append("### 📦 Manager Workflows Health")
     lines.append("| Repository | Workflow | Status | Conclusion | Run Link | Last Run |")
