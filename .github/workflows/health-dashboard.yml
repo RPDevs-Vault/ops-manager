@@ -61,8 +61,7 @@ jobs:
           fi
           REPORT+="\n"
 
-          # Find potentially unhealthy repos
- (Missing Description or extremely old)
+          # Find potentially unhealthy repos (Missing Description or extremely old)
           UNHEALTHY=$(echo "$REPOS" | jq -r '.[] | select(.isArchived == false) | select(.description == null or .description == "") | .nameWithOwner')
           
           REPORT+="### ⚠️ Attention Required\n"
