@@ -34,10 +34,10 @@ The section below is automatically compiled and updated every 6 hours by the [Gl
 
 <!-- HEALTH_DASHBOARD_START -->
 
-Last Updated: `2026-07-03 08:25:14 UTC`
+Last Updated: `2026-07-03 08:25:48 UTC`
 
 ### 🔑 API Rate Limits
-- **Core Rate Limit:** `4992/5000` (99.8% remaining)
+- **Core Rate Limit:** `4991/5000` (99.8% remaining)
 - **Reset Time:** `09:12:51 UTC`
 
 ### 🖥️ Self-Hosted Runner Fleet
@@ -55,7 +55,7 @@ Last Updated: `2026-07-03 08:25:14 UTC`
 | `container-manager` | Fleet Status Aggregator | ✅ `completed` | `success` | [Run #12](https://github.com/RPDevs-Vault/container-manager/actions/runs/28642604800) | 2026-07-03 06:23 UTC |
 | `container-manager` | Docker Collector | ✅ `completed` | `success` | [Run #32](https://github.com/RPDevs-Vault/container-manager/actions/runs/28636565388) | 2026-07-03 03:33 UTC |
 | `container-manager` | Dependency Build Engine | ❌ `completed` | `failure` | [Run #9](https://github.com/RPDevs-Vault/container-manager/actions/runs/28635655224) | 2026-07-03 04:38 UTC |
-| `RPDevs-Vault/github-manager` | *No runs discovered* | - | - | - | - |
+| `github-manager` | Global Health Dashboard | 🔄 `in_progress` | `Running...` | [Run #1](https://github.com/RPDevs-Vault/github-manager/actions/runs/28648292581) | 2026-07-03 08:25 UTC |
 | `RPDevs-Vault/project-manager` | *No runs discovered* | - | - | - | - |
 
 <!-- HEALTH_DASHBOARD_END -->
