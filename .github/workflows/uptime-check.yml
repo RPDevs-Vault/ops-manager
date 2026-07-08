@@ -20,7 +20,7 @@ jobs:
       - name: Run Endpoints Probe
         id: run_probe
         run: |
-          python3 probes/ping_endpoints.py
+          python3 observability/probes/ping_endpoints.py
         continue-on-error: true
 
       - name: Dispatch Alert on Failure
@@ -28,4 +28,4 @@ jobs:
         env:
           ALERT_WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
         run: |
-          python3 alerts/webhook_notifier.py "One or more critical core endpoints are offline! Check GitHub Actions logs."
+          python3 observability/alerts/webhook_notifier.py "One or more critical core endpoints are offline! Check GitHub Actions logs."

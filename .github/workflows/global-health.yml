@@ -8,7 +8,7 @@ on:
     branches:
       - main
     paths:
-      - 'aggregate_health.py'
+      - 'cockpit/aggregate_health.py'
       - '.github/workflows/global-health.yml'
 
 jobs:
@@ -30,8 +30,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
-          chmod +x aggregate_health.py
-          python3 aggregate_health.py
+          chmod +x cockpit/aggregate_health.py
+          python3 cockpit/aggregate_health.py
 
       - name: Commit and Push Changes
         run: |

@@ -25,8 +25,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
         run: |
-          chmod +x audit_actions.py
-          python3 audit_actions.py
+          chmod +x action/audit_actions.py
+          python3 action/audit_actions.py
 
       - name: Commit and Push Changes
         run: |

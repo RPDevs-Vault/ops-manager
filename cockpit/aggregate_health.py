@@ -7,9 +7,7 @@ from datetime import datetime, timezone
 
 ORGS = ["RPDevs-Vault", "RPDevs-Builds"]
 VAULT_REPOS = [
-    "vault-manager", "container-manager", "github-manager", 
-    "project-manager", "monitor-manager", "deploy-manager", 
-    "distributor-manager", "identity-manager"
+    "ops-manager", "builder-manager", "delivery-manager", "workspace-manager"
 ]
 BUILDS_REPOS = [
     "kodi-build", "xbmc-build", "rpdevs-builds.github.io", 
@@ -94,7 +92,7 @@ def generate_dashboard(token):
     import glob
     telemetry_dirs = [
         "/mnt/sharedroot/github_runners/shared/telemetry",
-        "/home/llmuser/projects/managers/github-manager/telemetry"
+        "/home/llmuser/projects/managers/ops-manager/cockpit/telemetry"
     ]
     telemetry_files = []
     for d in telemetry_dirs:
@@ -184,7 +182,7 @@ def main():
         
     readme_path = "README.md"
     if not os.path.exists(readme_path):
-        readme_path = "/home/llmuser/projects/managers/github-manager/README.md"
+        readme_path = "/home/llmuser/projects/managers/ops-manager/README.md"
         
     if not os.path.exists(readme_path):
         print(f"Error: README.md not found", file=sys.stderr)
