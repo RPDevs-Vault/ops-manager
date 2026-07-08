@@ -26,7 +26,7 @@ jobs:
             
             if [[ "$PARENT_DATA" == "null" ]]; then
               echo "|$repo|⚠️ Not a Fork anymore|N/A|" >> $REPORT
-              ((STALE_COUNT++))
+              STALE_COUNT=$((STALE_COUNT + 1))
               continue
             fi
 
@@ -41,10 +41,10 @@ jobs:
             
             if [[ "$ARCHIVED" == "true" ]]; then
               echo "|$repo|❌ Upstream Archived|[$UPSTREAM](https://github.com/$UPSTREAM)|" >> $REPORT
-              ((STALE_COUNT++))
+              STALE_COUNT=$((STALE_COUNT + 1))
             elif [[ "$ARCHIVED" == "404" ]]; then
               echo "|$repo|💀 Upstream Deleted|N/A|" >> $REPORT
-              ((STALE_COUNT++))
+              STALE_COUNT=$((STALE_COUNT + 1))
             fi
           done
 
