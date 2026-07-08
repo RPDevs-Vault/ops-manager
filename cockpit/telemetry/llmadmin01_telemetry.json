@@ -1,0 +1,15 @@
+{
+  "hostname": "llmadmin01",
+  "timestamp": "2026-07-03T08:38:56.822525+00:00",
+  "cpu_percent": 13.7,
+  "memory_percent": 62.7,
+  "sharedroot_disk_percent": 66.15,
+  "temperatures": {
+    "acpitz": 25.0,
+    "nvme": 33.85,
+    "coretemp": 55.0,
+    "pch_cannonlake": 48.0,
+    "dell_smm": 60.0,
+    "iwlwifi_1": 48.0
+  }
+}

@@ -1,0 +1,7 @@
+[
+  {
+    "update_topic": true,
+    "title": "Hub Dispatch Orchestration (Completed)",
+    "summary": "Stabilized the local runner environment (GID 986, socket mount). Implemented multi-arch Docker builds (linux/amd64, linux/arm64) using Buildx and QEMU. Configured GitHub Actions caching (type=gha) for optimized build speeds. Consolidated manifest definitions into manifest.yaml, removed thirdparty.yaml, and implemented unique project builds via jq in the build-engine."
+  }
+]
