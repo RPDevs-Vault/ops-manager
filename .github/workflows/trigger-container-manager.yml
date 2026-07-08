@@ -22,8 +22,8 @@ jobs:
           GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
           TARGET="${{ github.event.inputs.target || github.event.client_payload.target || 'all' }}"
-          echo "Emitting repository_dispatch to RPDevs-Vault/container-manager for target: $TARGET"
-          gh api -X POST /repos/RPDevs-Vault/container-manager/dispatches \
+          echo "Emitting repository_dispatch to RPDevs-Vault/builder-manager for target: $TARGET"
+          gh api -X POST /repos/RPDevs-Vault/builder-manager/dispatches \
             -f event_type='collect_docker_assets' \
             -f client_payload[target]="$TARGET"
           echo "Dispatch emitted successfully."
