@@ -7,7 +7,7 @@ on:
 
 jobs:
   audit:
-    runs-on: [self-hosted, linux64, lightweight]
+    runs-on: [self-hosted, linux64, heavy]
     permissions:
       contents: write
     steps:
@@ -35,7 +35,8 @@ jobs:
           git add README.md
           if ! git diff-index --quiet HEAD; then
             git commit -m "chore: update live actions dashboard [skip ci]"
-            git push
+            git pull origin main --rebase
+            git push origin main
           else
             echo "No changes to commit"
           fi

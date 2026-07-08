@@ -85,5 +85,6 @@ jobs:
           git add .
           if ! git diff --staged --quiet; then
             git commit -m "Automated Archive Sync: $(date)"
+            git pull origin main --rebase
             git push origin main
           fi

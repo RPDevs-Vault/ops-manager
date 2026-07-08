@@ -96,5 +96,6 @@ jobs:
           git add README.md
           if ! git diff --staged --quiet; then
             git commit -m "docs: auto-update health dashboard"
+            git pull origin main --rebase
             git push origin main
           fi
