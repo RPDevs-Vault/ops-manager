@@ -2,53 +2,32 @@
 
 
 <!-- HEALTH_DASHBOARD_START -->
+## 🛡️ Repository Health Overview
 
-Last Updated: `2026-07-08 07:33:34 UTC`
+| Metric | Count |
+| :--- | :--- |
+| **Total Repositories** | 11 |
+| **Total Forks** | 0 |
+| **Standalone Projects** | 11 |
+| **Archived Projects** | 0 |
 
-### 🔑 API Rate Limits
-- **Core Rate Limit:** `4920/5000` (98.4% remaining)
-- **Reset Time:** `08:16:19 UTC`
+## 🚀 Build Fleet Status (container-manager)
 
-### 🖥️ Self-Hosted Runner Fleet
-#### `RPDevs-Vault` Runner Fleet
-| Runner Name | OS | Status | Labels |
-| :--- | :--- | :--- | :--- |
-| `llmadmin-vault-super-01` | Linux | 🟢 Online | `X64, linux64, lightweight, medium, heavy` |
+| Workflow | Status | Last Run |
+| :--- | :--- | :--- |
 
-#### `RPDevs-Builds` Runner Fleet
-| Runner Name | OS | Status | Labels |
-| :--- | :--- | :--- | :--- |
-| `llmadmin-builds-super-01` | Linux | 🟢 Online | `X64, linux64, medium, heavy` |
-
-### 📦 Manager Workflows Health (RPDevs-Vault)
-| Repository | Workflow | Status | Conclusion | Run Link | Last Run |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `ops-manager` | Archival Automator | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28925452428) | 2026-07-08 07:29 UTC |
-| `ops-manager` | Artifact Lifecycle Manager | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28925552855) | 2026-07-08 07:31 UTC |
-| `ops-manager` | Cleanup Merged Branches | ❌ `completed` | `failure` | [Run #1](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28925641532) | 2026-07-08 07:33 UTC |
-| `ops-manager` | Global Actions Auditor | 🔄 `in_progress` | `Running...` | [Run #2](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28925680539) | 2026-07-08 07:33 UTC |
-| `ops-manager` | Global Health Dashboard | 🔄 `in_progress` | `Running...` | [Run #2](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28925682119) | 2026-07-08 07:33 UTC |
-| `builder-manager` | Fleet Status Aggregator | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28924297292) | 2026-07-08 07:07 UTC |
-| `builder-manager` | Warm Up Dependency Caches | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28918690962) | 2026-07-08 05:01 UTC |
-| `delivery-manager` | *No runs discovered* | - | - | - | - |
-| `workspace-manager` | Project Roadmap Sync | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/workspace-manager/actions/runs/28917460294) | 2026-07-08 04:26 UTC |
-
-### 🛠️ Build Workflows Health (RPDevs-Builds)
-| Repository | Workflow | Status | Conclusion | Run Link | Last Run |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `kodi-build` | Automated Workspace Housekeeping | ❌ `completed` | `cancelled` | [Run #4](https://github.com/RPDevs-Builds/kodi-build/actions/runs/28732305575) | 2026-07-06 06:42 UTC |
-| `kodi-build` | Build and Release Depends | ❌ `completed` | `cancelled` | [Run #9](https://github.com/RPDevs-Builds/kodi-build/actions/runs/28906406911) | 2026-07-08 00:01 UTC |
-| `kodi-build` | Build and Release Kodi | ❌ `completed` | `failure` | [Run #17](https://github.com/RPDevs-Builds/kodi-build/actions/runs/28689191934) | 2026-07-04 00:58 UTC |
-| `xbmc-build` | Build and Dispatch Kodi Core | ❌ `completed` | `failure` | [Run #52](https://github.com/RPDevs-Builds/xbmc-build/actions/runs/27486695421) | 2026-06-14 04:40 UTC |
-| `rpdevs-builds.github.io` | Deploy GitHub Pages | ✅ `completed` | `success` | [Run #127](https://github.com/RPDevs-Builds/rpdevs-builds.github.io/actions/runs/28925300763) | 2026-07-08 07:26 UTC |
-| `script.service.megacloud` | Megacloud Auto-Sync & Build | ✅ `completed` | `success` | [Run #70](https://github.com/RPDevs-Builds/script.service.megacloud/actions/runs/28914840133) | 2026-07-08 03:15 UTC |
-| `script.service.flaresolverr` | FlareSolverr Auto-Sync & Build | ✅ `completed` | `success` | [Run #31](https://github.com/RPDevs-Builds/script.service.flaresolverr/actions/runs/28912383667) | 2026-07-08 02:09 UTC |
-| `nextdns-firefox-addon` | CodeQL | ✅ `completed` | `success` | [Run #74](https://github.com/RPDevs-Builds/nextdns-firefox-addon/actions/runs/28770705035) | 2026-07-06 05:50 UTC |
-| `nextdns-firefox-addon` | OpenSSF Scorecard | ✅ `completed` | `success` | [Run #41](https://github.com/RPDevs-Builds/nextdns-firefox-addon/actions/runs/28859701933) | 2026-07-07 10:34 UTC |
-| `nextdns-firefox-addon` | github_actions in /. - Update #1446541275 | ✅ `completed` | `success` | [Run #26](https://github.com/RPDevs-Builds/nextdns-firefox-addon/actions/runs/28656149061) | 2026-07-03 10:59 UTC |
-| `nextdns-firefox-addon` | npm_and_yarn in /. - Update #1446541271 | ✅ `completed` | `success` | [Run #27](https://github.com/RPDevs-Builds/nextdns-firefox-addon/actions/runs/28656149159) | 2026-07-03 10:59 UTC |
-| `nextdns-firefox-addon` | npm_and_yarn in /. - Update #1448006917 | ✅ `completed` | `success` | [Run #28](https://github.com/RPDevs-Builds/nextdns-firefox-addon/actions/runs/28755908841) | 2026-07-05 21:45 UTC |
-| `vlc-live-555` | Universal Cross-Platform Matrix Release Engine | ✅ `completed` | `success` | [Run #123](https://github.com/RPDevs-Builds/vlc-live-555/actions/runs/28910579959) | 2026-07-08 01:23 UTC |
-
+### ⚠️ Attention Required
+The following repositories are missing descriptions:
+- `IamRPDev/.github`
+- `IamRPDev/dotfiles`
+- `IamRPDev/llmdata-core`
+- `IamRPDev/hugo_main.iamrpdev.github.io`
+- `IamRPDev/mkdocs_wiki.iamrpdev.github.io`
+- `IamRPDev/iamrpdev.github.io`
+- `IamRPDev/llm-project`
+- `IamRPDev/llm-thinktank`
+- `IamRPDev/cinn-agent-monitor`
+- `IamRPDev/cyan-resonance`
+- `IamRPDev/codex-arcana`
 
 <!-- HEALTH_DASHBOARD_END -->
