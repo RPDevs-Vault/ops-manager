@@ -3,10 +3,10 @@
 
 <!-- HEALTH_DASHBOARD_START -->
 
-Last Updated: `2026-07-08 05:01:01 UTC`
+Last Updated: `2026-07-08 05:05:03 UTC`
 
 ### 🔑 API Rate Limits
-- **Core Rate Limit:** `4871/5000` (97.4% remaining)
+- **Core Rate Limit:** `4850/5000` (97.0% remaining)
 - **Reset Time:** `05:15:12 UTC`
 
 ### 🖥️ Self-Hosted Runner Fleet
@@ -18,8 +18,8 @@ Last Updated: `2026-07-08 05:01:01 UTC`
 #### `RPDevs-Builds` Runner Fleet
 | Runner Name | OS | Status | Labels |
 | :--- | :--- | :--- | :--- |
-| `llmadmin-builds-super-01` | Linux | 🟢 Online | `X64, lightweight, linux64, medium, heavy` |
-| `t430-runner-01` | Linux | 🟢 Online | `X64, linux64, t430` |
+| `llmadmin-builds-super-01` | Linux | 🟢 Online | `X64, linux64, medium, heavy` |
+| `t430-runner-01` | Linux | 🟢 Online | `X64, lightweight, t430` |
 
 ### 🌡️ Hardware Telemetry
 | Hostname | CPU | Memory | Shared Disk | Temperatures | Last Updated |
@@ -30,7 +30,7 @@ Last Updated: `2026-07-08 05:01:01 UTC`
 | Repository | Workflow | Status | Conclusion | Run Link | Last Run |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `ops-manager` | Global Health Dashboard | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28917453934) | 2026-07-08 04:26 UTC |
-| `builder-manager` | Warm Up Dependency Caches | ⏳ `queued` | `Running...` | [Run #1](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28918690962) | 2026-07-08 05:00 UTC |
+| `builder-manager` | Warm Up Dependency Caches | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28918690962) | 2026-07-08 05:01 UTC |
 | `delivery-manager` | *No runs discovered* | - | - | - | - |
 | `workspace-manager` | Project Roadmap Sync | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/workspace-manager/actions/runs/28917460294) | 2026-07-08 04:26 UTC |
 
