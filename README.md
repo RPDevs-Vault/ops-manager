@@ -3,11 +3,11 @@
 
 <!-- HEALTH_DASHBOARD_START -->
 
-Last Updated: `2026-07-08 05:05:03 UTC`
+Last Updated: `2026-07-08 07:33:34 UTC`
 
 ### 🔑 API Rate Limits
-- **Core Rate Limit:** `4850/5000` (97.0% remaining)
-- **Reset Time:** `05:15:12 UTC`
+- **Core Rate Limit:** `4920/5000` (98.4% remaining)
+- **Reset Time:** `08:16:19 UTC`
 
 ### 🖥️ Self-Hosted Runner Fleet
 #### `RPDevs-Vault` Runner Fleet
@@ -19,17 +19,16 @@ Last Updated: `2026-07-08 05:05:03 UTC`
 | Runner Name | OS | Status | Labels |
 | :--- | :--- | :--- | :--- |
 | `llmadmin-builds-super-01` | Linux | 🟢 Online | `X64, linux64, medium, heavy` |
-| `t430-runner-01` | Linux | 🟢 Online | `X64, lightweight, t430` |
-
-### 🌡️ Hardware Telemetry
-| Hostname | CPU | Memory | Shared Disk | Temperatures | Last Updated |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| `llmadmin01` | 13.7% | 62.7% | 66.15% | acpitz: 25.0°C, nvme: 33.85°C, coretemp: 55.0°C, pch_cannonlake: 48.0°C, dell_smm: 60.0°C, iwlwifi_1: 48.0°C | 08:38:56 UTC |
 
 ### 📦 Manager Workflows Health (RPDevs-Vault)
 | Repository | Workflow | Status | Conclusion | Run Link | Last Run |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `ops-manager` | Global Health Dashboard | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28917453934) | 2026-07-08 04:26 UTC |
+| `ops-manager` | Archival Automator | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28925452428) | 2026-07-08 07:29 UTC |
+| `ops-manager` | Artifact Lifecycle Manager | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28925552855) | 2026-07-08 07:31 UTC |
+| `ops-manager` | Cleanup Merged Branches | ❌ `completed` | `failure` | [Run #1](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28925641532) | 2026-07-08 07:33 UTC |
+| `ops-manager` | Global Actions Auditor | 🔄 `in_progress` | `Running...` | [Run #2](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28925680539) | 2026-07-08 07:33 UTC |
+| `ops-manager` | Global Health Dashboard | 🔄 `in_progress` | `Running...` | [Run #2](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28925682119) | 2026-07-08 07:33 UTC |
+| `builder-manager` | Fleet Status Aggregator | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28924297292) | 2026-07-08 07:07 UTC |
 | `builder-manager` | Warm Up Dependency Caches | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28918690962) | 2026-07-08 05:01 UTC |
 | `delivery-manager` | *No runs discovered* | - | - | - | - |
 | `workspace-manager` | Project Roadmap Sync | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/workspace-manager/actions/runs/28917460294) | 2026-07-08 04:26 UTC |
@@ -41,7 +40,7 @@ Last Updated: `2026-07-08 05:05:03 UTC`
 | `kodi-build` | Build and Release Depends | ❌ `completed` | `cancelled` | [Run #9](https://github.com/RPDevs-Builds/kodi-build/actions/runs/28906406911) | 2026-07-08 00:01 UTC |
 | `kodi-build` | Build and Release Kodi | ❌ `completed` | `failure` | [Run #17](https://github.com/RPDevs-Builds/kodi-build/actions/runs/28689191934) | 2026-07-04 00:58 UTC |
 | `xbmc-build` | Build and Dispatch Kodi Core | ❌ `completed` | `failure` | [Run #52](https://github.com/RPDevs-Builds/xbmc-build/actions/runs/27486695421) | 2026-06-14 04:40 UTC |
-| `rpdevs-builds.github.io` | Deploy GitHub Pages | ✅ `completed` | `success` | [Run #126](https://github.com/RPDevs-Builds/rpdevs-builds.github.io/actions/runs/28916922864) | 2026-07-08 04:12 UTC |
+| `rpdevs-builds.github.io` | Deploy GitHub Pages | ✅ `completed` | `success` | [Run #127](https://github.com/RPDevs-Builds/rpdevs-builds.github.io/actions/runs/28925300763) | 2026-07-08 07:26 UTC |
 | `script.service.megacloud` | Megacloud Auto-Sync & Build | ✅ `completed` | `success` | [Run #70](https://github.com/RPDevs-Builds/script.service.megacloud/actions/runs/28914840133) | 2026-07-08 03:15 UTC |
 | `script.service.flaresolverr` | FlareSolverr Auto-Sync & Build | ✅ `completed` | `success` | [Run #31](https://github.com/RPDevs-Builds/script.service.flaresolverr/actions/runs/28912383667) | 2026-07-08 02:09 UTC |
 | `nextdns-firefox-addon` | CodeQL | ✅ `completed` | `success` | [Run #74](https://github.com/RPDevs-Builds/nextdns-firefox-addon/actions/runs/28770705035) | 2026-07-06 05:50 UTC |
