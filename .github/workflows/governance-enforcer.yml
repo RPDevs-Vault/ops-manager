@@ -7,7 +7,7 @@ on:
 
 jobs:
   enforce:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, lightweight]
     environment: vault-core
     steps:
       - name: Enforce Governance Policies

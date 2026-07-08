@@ -7,7 +7,7 @@ on:
 
 jobs:
   standardize:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, lightweight]
     steps:
       - name: Standardize Labels
         env:
