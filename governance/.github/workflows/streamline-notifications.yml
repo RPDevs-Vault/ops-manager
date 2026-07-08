@@ -1,0 +1,34 @@
+name: Streamline Notifications
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # Daily at 02:00
+  workflow_dispatch:
+
+jobs:
+  streamline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Streamline Notifications
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        run: |
+          # 1. Clear notifications from outside RPDevs-Vault
+          echo "Clearing outside notifications..."
+          gh api /notifications --paginate -q '.[] | select(.repository.owner.login != "RPDevs-Vault" and .repository.owner.login != "IamRPDev") | .id' > outside_ids.txt
+          while read id; do
+            gh api -X PATCH "/notifications/threads/$id" --silent
+          done < outside_ids.txt
+
+          # 2. Set Org Repos to Releases Only
+          echo "Setting org repos to Releases Only..."
+          # Fetch all repo names in the org
+          gh repo list RPDevs-Vault --limit 1000 --json nameWithOwner --jq '.[].nameWithOwner' > org_repos.txt
+          
+          while read repo; do
+            # Using the REST API for watch/subscription
+            # To set 'Releases Only', we use the 'subscription' endpoint with 'subscribed=true'
+            # Note: REST doesn't explicitly have a 'releases_only' flag, but 'gh repo watch' does.
+            # We'll use 'gh repo watch' which handles the custom state.
+            gh repo watch "$repo" --releases-only || echo "Failed to watch $repo"
+          done < org_repos.txt

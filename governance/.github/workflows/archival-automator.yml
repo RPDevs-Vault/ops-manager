@@ -1,0 +1,53 @@
+name: Archival Automator
+
+on:
+  schedule:
+    - cron: '0 10 * * 1' # Weekly on Monday at 10:00
+  workflow_dispatch:
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    environment: vault-core
+    steps:
+      - name: Identify & Archive Inactive Repos
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        run: |
+          # 1. Get all repositories that are NOT archived
+          REPOS=$(gh repo list --limit 1000 --json nameWithOwner,isFork,updatedAt,parent,isArchived --jq '.[] | select(.isArchived == false) | select(.nameWithOwner != "RPDevs-Vault/vault-manager") | {name: .nameWithOwner, updated: .updatedAt, isFork: .isFork, parent: .parent}')
+          
+          # Current date in seconds
+          NOW=$(date +%s)
+          # 2 years in seconds (approx 63,072,000)
+          TWO_YEARS=63072000
+
+          echo "$REPOS" | jq -c '.' | while read -r repo; do
+            NAME=$(echo "$repo" | jq -r '.name')
+            UPDATED=$(echo "$repo" | jq -r '.updated')
+            IS_FORK=$(echo "$repo" | jq -r '.isFork')
+            HAS_PARENT=$(echo "$repo" | jq -r '.parent != null')
+            
+            UPDATED_SEC=$(date -d "$UPDATED" +%s)
+            DIFF=$((NOW - UPDATED_SEC))
+
+            ARCHIVE=false
+            REASON=""
+
+            # Rule A: Fork where upstream is deleted
+            if [[ "$IS_FORK" == "true" && "$HAS_PARENT" == "false" ]]; then
+              ARCHIVE=true
+              REASON="Orphaned fork (upstream deleted)"
+            fi
+
+            # Rule B: Inactive for > 2 years
+            if [[ $DIFF -gt $TWO_YEARS ]]; then
+              ARCHIVE=true
+              REASON="Inactive for > 2 years (Last update: $UPDATED)"
+            fi
+
+            if [[ "$ARCHIVE" == "true" ]]; then
+              echo "Archiving $NAME: $REASON"
+              gh repo archive "$NAME" --yes || echo "Failed to archive $NAME"
+            fi
+          done

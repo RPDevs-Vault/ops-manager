@@ -1,0 +1,34 @@
+name: Policy Enforcer
+
+on:
+  schedule:
+    - cron: '0 5 * * 1' # Weekly on Monday at 05:00
+  workflow_dispatch:
+
+jobs:
+  enforce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce Repository Policies
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        run: |
+          REPOS=$(gh repo list --limit 1000 --limit 1000 --json nameWithOwner --jq '.[].nameWithOwner')
+          
+          for repo in $REPOS; do
+            echo "Checking policy for $repo..."
+            
+            # 1. Ensure 'upstream-sync' label exists (if not done by standardizer)
+            # 2. Check for missing LICENSE
+            HAS_LICENSE=$(gh api "/repos/$repo/license" --silent && echo "true" || echo "false")
+            if [[ "$HAS_LICENSE" == "false" ]]; then
+              echo "|$repo|Missing LICENSE|Alerting...|"
+              # We could auto-inject a license here, but for now we'll just log.
+            fi
+
+            # 3. Disable Wikis/Projects for forks to keep things clean
+            IS_FORK=$(gh repo view "$repo" --json isFork --jq '.isFork')
+            if [[ "$IS_FORK" == "true" ]]; then
+              gh repo edit "$repo" --enable-wiki=false --enable-projects=false --silent || echo "Failed to edit $repo"
+            fi
+          done

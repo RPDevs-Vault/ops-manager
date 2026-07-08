@@ -1,0 +1,30 @@
+name: Security Enforcer (Dependabot)
+
+on:
+  schedule:
+    - cron: '0 7 * * 1' # Weekly on Monday at 07:00
+  workflow_dispatch:
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable Security Features
+        env:
+          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        run: |
+          REPOS=$(gh repo list --limit 1000 --json nameWithOwner --jq '.[].nameWithOwner')
+          
+          for repo in $REPOS; do
+            echo "Enabling security for $repo..."
+            
+            # 1. Enable Dependabot Security Alerts
+            gh api -X PUT "/repos/$repo/vulnerability-alerts" --silent || echo "Failed alerts for $repo"
+            
+            # 2. Enable Automated Security Fixes
+            gh api -X PUT "/repos/$repo/automated-security-fixes" --silent || echo "Failed security fixes for $repo"
+            
+            # Note: Dependabot Security Updates (PRs) are typically managed by the presence 
+            # of a dependabot.yml. We can alert on missing config or enable the 
+            # platform-level "Security Updates" if available via API.
+          done
