@@ -7,7 +7,7 @@ on:
 
 jobs:
   audit:
-    runs-on: [self-hosted, linux, lightweight]
+    runs-on: [self-hosted, linux64, lightweight]
     permissions:
       contents: write
     steps:
