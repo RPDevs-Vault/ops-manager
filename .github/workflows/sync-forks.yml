@@ -2,30 +2,35 @@ name: Sync All Forks
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Daily at midnight
+  - cron: '0 0 * * *'   # Daily at midnight
   workflow_dispatch: # Allow manual triggers
 
 jobs:
   sync:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: linux-builders
+      labels:
+      - self-hosted
+      - linux
+      - lightweight
     environment: vault-core
     steps:
-      - name: Sync Forks
-        env:
-          GH_TOKEN: ${{ secrets.SYNC_TOKEN || secrets.GITHUB_TOKEN }}
-        run: |
-          # Get all forked repositories in the organization
-          REPOS=$(gh repo list --limit 1000 --limit 1000 --json nameWithOwner,isFork --jq '.[] | select(.isFork == true) | .nameWithOwner')
+    - name: Sync Forks
+      env:
+        GH_TOKEN: ${{ secrets.SYNC_TOKEN || secrets.GITHUB_TOKEN }}
+      run: |
+        # Get all forked repositories in the organization
+        REPOS=$(gh repo list --limit 1000 --limit 1000 --json nameWithOwner,isFork --jq '.[] | select(.isFork == true) | .nameWithOwner')
 
-          for repo in $REPOS; do
-            echo "Syncing $repo..."
-            gh repo sync "$repo" || echo "Failed to sync $repo"
-          done
+        for repo in $REPOS; do
+          echo "Syncing $repo..."
+          gh repo sync "$repo" || echo "Failed to sync $repo"
+        done
 
-      - name: Trigger Asset Discovery
-        env:
-          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
-        run: |
-          echo "Triggering Docker Collector in container-manager..."
-          gh workflow run docker-collector.yml --repo RPDevs-Vault/container-manager
+    - name: Trigger Asset Discovery
+      env:
+        GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+      run: |
+        echo "Triggering Docker Collector in container-manager..."
+        gh workflow run docker-collector.yml --repo RPDevs-Vault/container-manager
 

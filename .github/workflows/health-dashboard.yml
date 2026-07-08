@@ -2,100 +2,105 @@ name: Organization Health Dashboard
 
 on:
   schedule:
-    - cron: '0 9 * * 1' # Weekly on Monday at 09:00
+  - cron: '0 9 * * 1'   # Weekly on Monday at 09:00
   workflow_dispatch:
 
 jobs:
   dashboard:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: linux-builders
+      labels:
+      - self-hosted
+      - linux
+      - lightweight
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.SYNC_TOKEN }}
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.SYNC_TOKEN }}
 
-      - name: Generate Health Report
-        env:
-          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
-        run: |
-          REPOS=$(gh repo list --limit 1000 --json nameWithOwner,isFork,visibility,isArchived --jq '.')
-          
-          TOTAL_REPOS=$(echo "$REPOS" | jq 'length')
-          TOTAL_FORKS=$(echo "$REPOS" | jq '[.[] | select(.isFork == true)] | length')
-          TOTAL_STANDALONE=$(echo "$REPOS" | jq '[.[] | select(.isFork == false)] | length')
-          TOTAL_ARCHIVED=$(echo "$REPOS" | jq '[.[] | select(.isArchived == true)] | length')
-          
-          # Initialize report section
-          REPORT="## 🛡️ Repository Health Overview\n\n"
-          REPORT+="| Metric | Count |\n"
-          REPORT+="| :--- | :--- |\n"
-          REPORT+="| **Total Repositories** | $TOTAL_REPOS |\n"
-          REPORT+="| **Total Forks** | $TOTAL_FORKS |\n"
-          REPORT+="| **Standalone Projects** | $TOTAL_STANDALONE |\n"
-          REPORT+="| **Archived Projects** | $TOTAL_ARCHIVED |\n\n"
+    - name: Generate Health Report
+      env:
+        GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+      run: |
+        REPOS=$(gh repo list --limit 1000 --json nameWithOwner,isFork,visibility,isArchived --jq '.')
 
-          # Fetch Build Fleet Status
-          REPORT+="## 🚀 Build Fleet Status (container-manager)\n\n"
-          REPORT+="| Workflow | Status | Last Run |\n"
-          REPORT+="| :--- | :--- | :--- |\n"
+        TOTAL_REPOS=$(echo "$REPOS" | jq 'length')
+        TOTAL_FORKS=$(echo "$REPOS" | jq '[.[] | select(.isFork == true)] | length')
+        TOTAL_STANDALONE=$(echo "$REPOS" | jq '[.[] | select(.isFork == false)] | length')
+        TOTAL_ARCHIVED=$(echo "$REPOS" | jq '[.[] | select(.isArchived == true)] | length')
 
-          BUILDS=$(gh run list --repo RPDevs-Vault/container-manager --limit 5 --json name,conclusion,status,createdAt,url --jq '.[]')
-          if [[ ! -z "$BUILDS" ]]; then
-            echo "$BUILDS" | jq -c '.' | while read -r run; do
-              NAME=$(echo "$run" | jq -r '.name')
-              CONC=$(echo "$run" | jq -r '.conclusion // .status')
-              DATE=$(echo "$run" | jq -r '.createdAt')
-              URL=$(echo "$run" | jq -r '.url')
+        # Initialize report section
+        REPORT="## 🛡️ Repository Health Overview\n\n"
+        REPORT+="| Metric | Count |\n"
+        REPORT+="| :--- | :--- |\n"
+        REPORT+="| **Total Repositories** | $TOTAL_REPOS |\n"
+        REPORT+="| **Total Forks** | $TOTAL_FORKS |\n"
+        REPORT+="| **Standalone Projects** | $TOTAL_STANDALONE |\n"
+        REPORT+="| **Archived Projects** | $TOTAL_ARCHIVED |\n\n"
 
-              case "$CONC" in
-                success) ICON="✅" ;;
-                failure) ICON="❌" ;;
-                cancelled) ICON="⚪" ;;
-                *) ICON="⏳" ;;
-              esac
+        # Fetch Build Fleet Status
+        REPORT+="## 🚀 Build Fleet Status (container-manager)\n\n"
+        REPORT+="| Workflow | Status | Last Run |\n"
+        REPORT+="| :--- | :--- | :--- |\n"
 
-              REPORT+="| [$NAME]($URL) | $ICON $CONC | $DATE |\n"
-            done
-          else
-            REPORT+="| No recent builds found | - | - |\n"
-          fi
-          REPORT+="\n"
+        BUILDS=$(gh run list --repo RPDevs-Vault/container-manager --limit 5 --json name,conclusion,status,createdAt,url --jq '.[]')
+        if [[ ! -z "$BUILDS" ]]; then
+          echo "$BUILDS" | jq -c '.' | while read -r run; do
+            NAME=$(echo "$run" | jq -r '.name')
+            CONC=$(echo "$run" | jq -r '.conclusion // .status')
+            DATE=$(echo "$run" | jq -r '.createdAt')
+            URL=$(echo "$run" | jq -r '.url')
 
-          # Find potentially unhealthy repos (Missing Description or extremely old)
-          UNHEALTHY=$(echo "$REPOS" | jq -r '.[] | select(.isArchived == false) | select(.description == null or .description == "") | .nameWithOwner')
-          
-          REPORT+="### ⚠️ Attention Required\n"
-          if [[ ! -z "$UNHEALTHY" ]]; then
-            REPORT+="The following repositories are missing descriptions:\n"
-            for r in $UNHEALTHY; do
-              REPORT+="- \`$r\`\n"
-            done
-          else
-            REPORT+="All active repositories have metadata populated. ✅\n"
-          fi
+            case "$CONC" in
+              success) ICON="✅" ;;
+              failure) ICON="❌" ;;
+              cancelled) ICON="⚪" ;;
+              *) ICON="⏳" ;;
+            esac
 
-          # Use sed to replace the section in README.md
-          # This assumes a marker <!-- HEALTH_DASHBOARD_START --> and <!-- HEALTH_DASHBOARD_END -->
-          
-          # First, ensure markers exist
-          if ! grep -q "<!-- HEALTH_DASHBOARD_START -->" README.md; then
-            echo -e "\n<!-- HEALTH_DASHBOARD_START -->\n<!-- HEALTH_DASHBOARD_END -->" >> README.md
-          fi
-          
-          # Create temporary README
-          awk -v report="$REPORT" '
-            /<!-- HEALTH_DASHBOARD_START -->/ { print; print report; skip=1; next }
-            /<!-- HEALTH_DASHBOARD_END -->/ { skip=0 }
-            !skip { print }
-          ' README.md > README.tmp && mv README.tmp README.md
+            REPORT+="| [$NAME]($URL) | $ICON $CONC | $DATE |\n"
+          done
+        else
+          REPORT+="| No recent builds found | - | - |\n"
+        fi
+        REPORT+="\n"
 
-      - name: Commit & Push
-        run: |
-          git config user.name "Health Bot"
-          git config user.email "actions@github.com"
-          git add README.md
-          if ! git diff --staged --quiet; then
-            git commit -m "docs: auto-update health dashboard"
-            git pull origin main --rebase
-            git push origin main
-          fi
+        # Find potentially unhealthy repos (Missing Description or extremely old)
+        UNHEALTHY=$(echo "$REPOS" | jq -r '.[] | select(.isArchived == false) | select(.description == null or .description == "") | .nameWithOwner')
+
+        REPORT+="### ⚠️ Attention Required\n"
+        if [[ ! -z "$UNHEALTHY" ]]; then
+          REPORT+="The following repositories are missing descriptions:\n"
+          for r in $UNHEALTHY; do
+            REPORT+="- \`$r\`\n"
+          done
+        else
+          REPORT+="All active repositories have metadata populated. ✅\n"
+        fi
+
+        # Use sed to replace the section in README.md
+        # This assumes a marker <!-- HEALTH_DASHBOARD_START --> and <!-- HEALTH_DASHBOARD_END -->
+
+        # First, ensure markers exist
+        if ! grep -q "<!-- HEALTH_DASHBOARD_START -->" README.md; then
+          echo -e "\n<!-- HEALTH_DASHBOARD_START -->\n<!-- HEALTH_DASHBOARD_END -->" >> README.md
+        fi
+
+        # Create temporary README
+        awk -v report="$REPORT" '
+          /<!-- HEALTH_DASHBOARD_START -->/ { print; print report; skip=1; next }
+          /<!-- HEALTH_DASHBOARD_END -->/ { skip=0 }
+          !skip { print }
+        ' README.md > README.tmp && mv README.tmp README.md
+
+    - name: Commit & Push
+      run: |
+        git config user.name "Health Bot"
+        git config user.email "actions@github.com"
+        git add README.md
+        if ! git diff --staged --quiet; then
+          git commit -m "docs: auto-update health dashboard"
+          git pull origin main --rebase
+          git push origin main
+        fi

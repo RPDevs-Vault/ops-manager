@@ -2,47 +2,52 @@ name: Notification Heatmap
 
 on:
   schedule:
-    - cron: '0 12 * * 0' # Weekly on Sunday at 12:00
+  - cron: '0 12 * * 0'   # Weekly on Sunday at 12:00
   workflow_dispatch:
 
 jobs:
   analyze:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: linux-builders
+      labels:
+      - self-hosted
+      - linux
+      - lightweight
     steps:
-      - name: Analyze Notification Volume
-        env:
-          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
-        run: |
-          # Fetch notifications from the last 7 days (all, not just unread)
-          # We use the REST API with 'all=true'
-          SINCE=$(date -u -d "7 days ago" +"%Y-%m-%dT%H:%M:%SZ")
-          echo "Fetching notifications since $SINCE..."
-          
-          # Aggregate notifications by repository
-          NOTIFS=$(gh api "/notifications?all=true&since=$SINCE" --paginate --jq '.[].repository.full_name' | sort | uniq -c | sort -nr)
-          
-          if [[ -z "$NOTIFS" ]]; then
-            echo "No notification activity detected this week. ✅"
-            exit 0
+    - name: Analyze Notification Volume
+      env:
+        GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+      run: |
+        # Fetch notifications from the last 7 days (all, not just unread)
+        # We use the REST API with 'all=true'
+        SINCE=$(date -u -d "7 days ago" +"%Y-%m-%dT%H:%M:%SZ")
+        echo "Fetching notifications since $SINCE..."
+
+        # Aggregate notifications by repository
+        NOTIFS=$(gh api "/notifications?all=true&since=$SINCE" --paginate --jq '.[].repository.full_name' | sort | uniq -c | sort -nr)
+
+        if [[ -z "$NOTIFS" ]]; then
+          echo "No notification activity detected this week. ✅"
+          exit 0
+        fi
+
+        REPORT="notification_heatmap.md"
+        echo "## 🔥 Notification Heatmap - Last 7 Days" > $REPORT
+        echo "This report identifies repositories with high activity that may need restrictive notification settings." >> $REPORT
+        echo "" >> $REPORT
+        echo "| Count | Repository | Recommended Action |" >> $REPORT
+        echo "| :--- | :--- | :--- |" >> $REPORT
+
+        while read -r count repo; do
+          ACTION="None"
+          if [ $count -gt 50 ]; then
+            ACTION="🚨 **Auto-Muted (Releases Only)**"
+            gh repo watch "$repo" --releases-only || echo "Failed to mute $repo"
+          elif [ $count -gt 20 ]; then
+            ACTION="⚠️ Consider 'Releases Only'"
           fi
+          
+          echo "| $count | \`$repo\` | $ACTION |" >> $REPORT
+        done <<< "$NOTIFS"
 
-          REPORT="notification_heatmap.md"
-          echo "## 🔥 Notification Heatmap - Last 7 Days" > $REPORT
-          echo "This report identifies repositories with high activity that may need restrictive notification settings." >> $REPORT
-          echo "" >> $REPORT
-          echo "| Count | Repository | Recommended Action |" >> $REPORT
-          echo "| :--- | :--- | :--- |" >> $REPORT
-
-          while read -r count repo; do
-            ACTION="None"
-            if [ $count -gt 50 ]; then
-              ACTION="🚨 **Auto-Muted (Releases Only)**"
-              gh repo watch "$repo" --releases-only || echo "Failed to mute $repo"
-            elif [ $count -gt 20 ]; then
-              ACTION="⚠️ Consider 'Releases Only'"
-            fi
-            
-            echo "| $count | \`$repo\` | $ACTION |" >> $REPORT
-          done <<< "$NOTIFS"
-
-          gh issue create --repo RPDevs-Vault/ops-manager --title "Weekly Notification Heatmap" --body-file $REPORT --label "maintenance"
+        gh issue create --repo RPDevs-Vault/ops-manager --title "Weekly Notification Heatmap" --body-file $REPORT --label "maintenance"

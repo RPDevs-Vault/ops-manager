@@ -2,89 +2,94 @@ name: Organization Archive Engine
 
 on:
   schedule:
-    - cron: '0 0 * * 0' # Weekly on Sunday at 00:00
+  - cron: '0 0 * * 0'   # Weekly on Sunday at 00:00
   workflow_dispatch:
 
 jobs:
   archive:
-    runs-on: ubuntu-latest
+    runs-on:
+      group: linux-builders
+      labels:
+      - self-hosted
+      - linux
+      - lightweight
     environment: vault-core
     steps:
-      - name: Checkout Archive Repository
-        uses: actions/checkout@v4
-        with:
-          repository: RPDevs-Vault/Archive
-          token: ${{ secrets.SYNC_TOKEN }}
-          fetch-depth: 0
-          path: archive
+    - name: Checkout Archive Repository
+      uses: actions/checkout@v4
+      with:
+        repository: RPDevs-Vault/Archive
+        token: ${{ secrets.SYNC_TOKEN }}
+        fetch-depth: 0
+        path: archive
 
-      - name: Scan & Update Archive
-        env:
-          GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
-        run: |
-          cd archive
-          git config user.name "Vault Archive Bot"
-          git config user.email "actions@github.com"
+    - name: Scan & Update Archive
+      env:
+        GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
+      run: |
+        cd archive
+        git config user.name "Vault Archive Bot"
+        git config user.email "actions@github.com"
 
-          # Function to scan forks for a target (user or org)
-          scan_forks() {
-            local target=$1
-            local type=$2 # "user" or "org"
-            
-            if [[ "$type" == "user" ]]; then
-              QUERY="query { user(login: \"$target\") { repositories(isFork: true, first: 100, affiliations: [OWNER]) { nodes { nameWithOwner parent { nameWithOwner description } } } } }"
-            else
-              QUERY="query { organization(login: \"$target\") { repositories(isFork: true, first: 100) { nodes { nameWithOwner parent { nameWithOwner description } } } } }"
-            fi
-            
-            gh api graphql -f query="$QUERY" --jq '.data.'$type'.repositories.nodes[] | select(.parent != null) | "\(.parent.nameWithOwner) | \(.nameWithOwner) | \(.parent.description // "No description")"'
-          }
-
-          # Gather forks from both sources
-          echo "Scanning IamRPDev..."
-          scan_forks "IamRPDev" "user" > forks_list.txt
-          echo "Scanning RPDevs-Vault..."
-          scan_forks "RPDevs-Vault" "organization" >> forks_list.txt
-
-          echo "### Archive Sync Report - $(date)" >> $GITHUB_STEP_SUMMARY
-          echo "| Status | Repository | Source |" >> $GITHUB_STEP_SUMMARY
-          echo "| :--- | :--- | :--- |" >> $GITHUB_STEP_SUMMARY
-
-          while IFS=" | " read -r source_repo my_fork desc; do
-            [ -z "$source_repo" ] && continue
-            REPO_URL="https://github.com/$source_repo.git"
-            
-            # Skip if it's the archive itself
-            [[ "$source_repo" == "RPDevs-Vault/Archive" ]] && continue
-
-            SUCCESS=false
-            ACTION=""
-
-            if [ ! -d "$source_repo" ]; then
-              echo "Adding subtree $source_repo..."
-              if git subtree add --prefix "$source_repo" "$REPO_URL" main --squash 2>/dev/null || \
-                 git subtree add --prefix "$source_repo" "$REPO_URL" master --squash 2>/dev/null; then
-                SUCCESS=true; ACTION="Archived"
-              fi
-            else
-              echo "Updating subtree $source_repo..."
-              if git subtree pull --prefix "$source_repo" "$REPO_URL" main --squash 2>/dev/null || \
-                 git subtree pull --prefix "$source_repo" "$REPO_URL" master --squash 2>/dev/null; then
-                SUCCESS=true; ACTION="Updated"
-              fi
-            fi
-
-            if [ "$SUCCESS" = true ]; then
-              echo "| $ACTION | \`$source_repo\` | Success |" >> $GITHUB_STEP_SUMMARY
-            else
-              echo "| Failed | \`$source_repo\` | Check logs |" >> $GITHUB_STEP_SUMMARY
-            fi
-          done < forks_list.txt
-
-          # Push changes back to Archive repo
-          git add .
-          if ! git diff --staged --quiet; then
-            git commit -m "Automated Archive Sync: $(date)"
-            git pull origin main --rebase
-            git push origin main
+        # Function to scan forks for a target (user or org)
+        scan_forks() {
+          local target=$1
+          local type=$2 # "user" or "org"
+          
+          if [[ "$type" == "user" ]]; then
+            QUERY="query { user(login: \"$target\") { repositories(isFork: true, first: 100, affiliations: [OWNER]) { nodes { nameWithOwner parent { nameWithOwner description } } } } }"
+          else
+            QUERY="query { organization(login: \"$target\") { repositories(isFork: true, first: 100) { nodes { nameWithOwner parent { nameWithOwner description } } } } }"
           fi
+          
+          gh api graphql -f query="$QUERY" --jq '.data.'$type'.repositories.nodes[] | select(.parent != null) | "\(.parent.nameWithOwner) | \(.nameWithOwner) | \(.parent.description // "No description")"'
+        }
+
+        # Gather forks from both sources
+        echo "Scanning IamRPDev..."
+        scan_forks "IamRPDev" "user" > forks_list.txt
+        echo "Scanning RPDevs-Vault..."
+        scan_forks "RPDevs-Vault" "organization" >> forks_list.txt
+
+        echo "### Archive Sync Report - $(date)" >> $GITHUB_STEP_SUMMARY
+        echo "| Status | Repository | Source |" >> $GITHUB_STEP_SUMMARY
+        echo "| :--- | :--- | :--- |" >> $GITHUB_STEP_SUMMARY
+
+        while IFS=" | " read -r source_repo my_fork desc; do
+          [ -z "$source_repo" ] && continue
+          REPO_URL="https://github.com/$source_repo.git"
+          
+          # Skip if it's the archive itself
+          [[ "$source_repo" == "RPDevs-Vault/Archive" ]] && continue
+
+          SUCCESS=false
+          ACTION=""
+
+          if [ ! -d "$source_repo" ]; then
+            echo "Adding subtree $source_repo..."
+            if git subtree add --prefix "$source_repo" "$REPO_URL" main --squash 2>/dev/null || \
+               git subtree add --prefix "$source_repo" "$REPO_URL" master --squash 2>/dev/null; then
+              SUCCESS=true; ACTION="Archived"
+            fi
+          else
+            echo "Updating subtree $source_repo..."
+            if git subtree pull --prefix "$source_repo" "$REPO_URL" main --squash 2>/dev/null || \
+               git subtree pull --prefix "$source_repo" "$REPO_URL" master --squash 2>/dev/null; then
+              SUCCESS=true; ACTION="Updated"
+            fi
+          fi
+
+          if [ "$SUCCESS" = true ]; then
+            echo "| $ACTION | \`$source_repo\` | Success |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| Failed | \`$source_repo\` | Check logs |" >> $GITHUB_STEP_SUMMARY
+          fi
+        done < forks_list.txt
+
+        # Push changes back to Archive repo
+        git add .
+        if ! git diff --staged --quiet; then
+          git commit -m "Automated Archive Sync: $(date)"
+          git pull origin main --rebase
+          git push origin main
+        fi
