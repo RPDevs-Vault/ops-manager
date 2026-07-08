@@ -37,5 +37,5 @@ jobs:
           done
 
           if [ "$MISSING_COUNT" -gt 0 ]; then
-            gh issue create --repo RPDevs-Vault/vault-manager --title "License Audit: $MISSING_COUNT projects missing licenses" --body-file "$REPORT" --label "governance"
+            gh issue create --repo RPDevs-Vault/ops-manager --title "License Audit: $MISSING_COUNT projects missing licenses" --body-file "$REPORT" --label "governance"
           fi

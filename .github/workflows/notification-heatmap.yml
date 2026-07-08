@@ -45,4 +45,4 @@ jobs:
             echo "| $count | \`$repo\` | $ACTION |" >> $REPORT
           done <<< "$NOTIFS"
 
-          gh issue create --repo RPDevs-Vault/vault-manager --title "Weekly Notification Heatmap" --body-file $REPORT --label "maintenance"
+          gh issue create --repo RPDevs-Vault/ops-manager --title "Weekly Notification Heatmap" --body-file $REPORT --label "maintenance"

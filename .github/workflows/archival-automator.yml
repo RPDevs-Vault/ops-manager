@@ -15,7 +15,7 @@ jobs:
           GH_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
           # 1. Get all repositories that are NOT archived
-          REPOS=$(gh repo list --limit 1000 --json nameWithOwner,isFork,updatedAt,parent,isArchived --jq '.[] | select(.isArchived == false) | select(.nameWithOwner != "RPDevs-Vault/vault-manager") | {name: .nameWithOwner, updated: .updatedAt, isFork: .isFork, parent: .parent}')
+          REPOS=$(gh repo list --limit 1000 --json nameWithOwner,isFork,updatedAt,parent,isArchived --jq '.[] | select(.isArchived == false) | select(.nameWithOwner != "RPDevs-Vault/ops-manager") | {name: .nameWithOwner, updated: .updatedAt, isFork: .isFork, parent: .parent}')
           
           # Current date in seconds
           NOW=$(date +%s)
