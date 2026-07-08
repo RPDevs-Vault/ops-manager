@@ -51,7 +51,7 @@ def audit_repo(org, repo_name, token):
     runs = get_workflow_runs(org, repo_name, token)
     return repo_name, org, runs
 
-MANAGERS = ["vault-manager", "container-manager", "github-manager", "project-manager", "deploy-manager", "distributor-manager", "identity-manager", "thought-manager", "monitor-manager"]
+MANAGERS = ["ops-manager", "builder-manager", "delivery-manager", "workspace-manager"]
 
 def main():
     token = os.environ.get("GH_TOKEN") or os.environ.get("SYNC_TOKEN") or os.environ.get("GH_PAT")
@@ -228,7 +228,7 @@ def main():
     # 4. Write back to README.md
     readme_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "README.md")
     if not os.path.exists(readme_path):
-        readme_path = "/home/llmuser/projects/managers/action-manager/README.md"
+        readme_path = "/home/llmuser/projects/managers/ops-manager/action/README.md"
         
     with open(readme_path, "r") as f:
         content = f.read()
