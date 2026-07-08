@@ -7,7 +7,7 @@ on:
 
 jobs:
   analyze:
-    runs-on: [self-hosted, linux, lightweight]
+    runs-on: ubuntu-latest
     steps:
       - name: Analyze Notification Volume
         env:

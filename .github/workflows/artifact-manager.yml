@@ -7,7 +7,7 @@ on:
 
 jobs:
   prune:
-    runs-on: [self-hosted, linux, lightweight]
+    runs-on: ubuntu-latest
     steps:
       - name: Prune Old Artifacts
         env:
