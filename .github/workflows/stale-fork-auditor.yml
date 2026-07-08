@@ -33,7 +33,11 @@ jobs:
             UPSTREAM=$(echo "$PARENT_DATA" | jq -r '.nameWithOwner')
             
             # Check if upstream is archived
-            ARCHIVED=$(gh repo view "$UPSTREAM" --json isArchived --jq '.isArchived' 2>/dev/null || echo "404")
+            if gh repo view "$UPSTREAM" >/dev/null 2>&1; then
+              ARCHIVED=$(gh repo view "$UPSTREAM" --json isArchived --jq '.isArchived')
+            else
+              ARCHIVED="404"
+            fi
             
             if [[ "$ARCHIVED" == "true" ]]; then
               echo "|$repo|❌ Upstream Archived|[$UPSTREAM](https://github.com/$UPSTREAM)|" >> $REPORT

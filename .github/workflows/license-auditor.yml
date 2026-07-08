@@ -28,7 +28,11 @@ jobs:
           for repo in $REPOS; do
             echo "Checking $repo..."
             # Check if repo has a license
-            HAS_LICENSE=$(gh api "/repos/$repo/license" --silent && echo "true" || echo "false")
+            if gh api "/repos/$repo/license" --silent >/dev/null 2>&1; then
+              HAS_LICENSE="true"
+            else
+              HAS_LICENSE="false"
+            fi
             
             if [[ "$HAS_LICENSE" == "false" ]]; then
               echo "|$repo|Please add a LICENSE file.|" >> "$REPORT"
