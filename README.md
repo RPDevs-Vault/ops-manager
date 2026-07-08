@@ -2,10 +2,11 @@
 
 
 <!-- HEALTH_DASHBOARD_START -->
-Last Updated: `2026-07-08 04:26:16 UTC`
+
+Last Updated: `2026-07-08 04:27:27 UTC`
 
 ### 🔑 API Rate Limits
-- **Core Rate Limit:** `4946/5000` (98.9% remaining)
+- **Core Rate Limit:** `4942/5000` (98.8% remaining)
 - **Reset Time:** `05:15:12 UTC`
 
 ### 🖥️ Self-Hosted Runner Fleet
@@ -20,13 +21,18 @@ Last Updated: `2026-07-08 04:26:16 UTC`
 | `kodi-local-linux-v2` | Linux | 🔴 Offline | `X64, linux64` |
 | `llmadmin-builds-super-01` | Linux | 🟢 Online | `X64, lightweight, linux64, medium, heavy` |
 
+### 🌡️ Hardware Telemetry
+| Hostname | CPU | Memory | Shared Disk | Temperatures | Last Updated |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `llmadmin01` | 13.7% | 62.7% | 66.15% | acpitz: 25.0°C, nvme: 33.85°C, coretemp: 55.0°C, pch_cannonlake: 48.0°C, dell_smm: 60.0°C, iwlwifi_1: 48.0°C | 08:38:56 UTC |
+
 ### 📦 Manager Workflows Health (RPDevs-Vault)
 | Repository | Workflow | Status | Conclusion | Run Link | Last Run |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| `ops-manager` | Global Health Dashboard | 🔄 `in_progress` | `Running...` | [Run #1](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28917453934) | 2026-07-08 04:26 UTC |
+| `ops-manager` | Global Health Dashboard | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28917453934) | 2026-07-08 04:26 UTC |
 | `builder-manager` | *No runs discovered* | - | - | - | - |
 | `delivery-manager` | *No runs discovered* | - | - | - | - |
-| `workspace-manager` | *No runs discovered* | - | - | - | - |
+| `workspace-manager` | Project Roadmap Sync | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/workspace-manager/actions/runs/28917460294) | 2026-07-08 04:26 UTC |
 
 ### 🛠️ Build Workflows Health (RPDevs-Builds)
 | Repository | Workflow | Status | Conclusion | Run Link | Last Run |
@@ -44,5 +50,6 @@ Last Updated: `2026-07-08 04:26:16 UTC`
 | `nextdns-firefox-addon` | npm_and_yarn in /. - Update #1446541271 | ✅ `completed` | `success` | [Run #27](https://github.com/RPDevs-Builds/nextdns-firefox-addon/actions/runs/28656149159) | 2026-07-03 10:59 UTC |
 | `nextdns-firefox-addon` | npm_and_yarn in /. - Update #1448006917 | ✅ `completed` | `success` | [Run #28](https://github.com/RPDevs-Builds/nextdns-firefox-addon/actions/runs/28755908841) | 2026-07-05 21:45 UTC |
 | `vlc-live-555` | Universal Cross-Platform Matrix Release Engine | ✅ `completed` | `success` | [Run #123](https://github.com/RPDevs-Builds/vlc-live-555/actions/runs/28910579959) | 2026-07-08 01:23 UTC |
+
 
 <!-- HEALTH_DASHBOARD_END -->
