@@ -3,27 +3,36 @@
 
 <!-- HEALTH_DASHBOARD_START -->
 
-Last Updated: `2026-07-08 08:56:32 UTC`
+Last Updated: `2026-07-08 09:04:10 UTC`
 
 ### 🔑 API Rate Limits
-- **Core Rate Limit:** `4952/5000` (99.0% remaining)
+- **Core Rate Limit:** `4919/5000` (98.4% remaining)
 - **Reset Time:** `09:16:43 UTC`
 
 ### 🖥️ Self-Hosted Runner Fleet
-*No active self-hosted runners discovered or unauthorized access.*
+#### `RPDevs-Vault` Runner Fleet
+| Runner Name | OS | Status | Labels |
+| :--- | :--- | :--- | :--- |
+| `llmadmin-vault-super-01` | Linux | 🟢 Online | `X64, linux64, lightweight, medium, heavy` |
+
+#### `RPDevs-Builds` Runner Fleet
+| Runner Name | OS | Status | Labels |
+| :--- | :--- | :--- | :--- |
+| `llmadmin-builds-super-01` | Linux | 🟢 Online | `X64, linux64, medium, heavy` |
 
 ### 📦 Manager Workflows Health (RPDevs-Vault)
 | Repository | Workflow | Status | Conclusion | Run Link | Last Run |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | `ops-manager` | Cleanup Merged Branches | ❌ `completed` | `failure` | [Run #2](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28926322148) | 2026-07-08 07:45 UTC |
 | `ops-manager` | Global Actions Auditor | ❌ `completed` | `failure` | [Run #3](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28926310776) | 2026-07-08 07:46 UTC |
-| `ops-manager` | Global Health Dashboard | 🔄 `in_progress` | `Running...` | [Run #4](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28930370493) | 2026-07-08 08:56 UTC |
-| `ops-manager` | License Auditor | ❌ `completed` | `failure` | [Run #2](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28926280975) | 2026-07-08 07:44 UTC |
+| `ops-manager` | Global Health Dashboard | 🔄 `in_progress` | `Running...` | [Run #5](https://github.com/RPDevs-Vault/ops-manager/actions/runs/28930464742) | 2026-07-08 09:04 UTC |
+| `builder-manager` | Dependency Build Engine | ⏳ `queued` | `Running...` | [Run #1](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28930826691) | 2026-07-08 09:03 UTC |
 | `builder-manager` | Docker Collector | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28926235762) | 2026-07-08 07:46 UTC |
 | `builder-manager` | Fleet Status Aggregator | ✅ `completed` | `success` | [Run #2](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28926563515) | 2026-07-08 07:50 UTC |
-| `builder-manager` | Warm Up Dependency Caches | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28918690962) | 2026-07-08 05:01 UTC |
-| `delivery-manager` | *No runs discovered* | - | - | - | - |
-| `workspace-manager` | Project Roadmap Sync | ✅ `completed` | `success` | [Run #1](https://github.com/RPDevs-Vault/workspace-manager/actions/runs/28917460294) | 2026-07-08 04:26 UTC |
+| `builder-manager` | Test Dispatch | ⏳ `queued` | `Running...` | [Run #1](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28930526222) | 2026-07-08 08:59 UTC |
+| `builder-manager` | Warm Up Dependency Caches | ⏳ `queued` | `Running...` | [Run #2](https://github.com/RPDevs-Vault/builder-manager/actions/runs/28930817722) | 2026-07-08 09:03 UTC |
+| `delivery-manager` | GitOps Deployment Dispatcher | ⏳ `queued` | `Running...` | [Run #1](https://github.com/RPDevs-Vault/delivery-manager/actions/runs/28930524613) | 2026-07-08 08:59 UTC |
+| `workspace-manager` | Project Roadmap Sync | ⏳ `queued` | `Running...` | [Run #3](https://github.com/RPDevs-Vault/workspace-manager/actions/runs/28930523145) | 2026-07-08 08:59 UTC |
 
 ### 🛠️ Build Workflows Health (RPDevs-Builds)
 | Repository | Workflow | Status | Conclusion | Run Link | Last Run |
