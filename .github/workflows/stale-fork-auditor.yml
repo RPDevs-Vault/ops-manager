@@ -49,5 +49,5 @@ jobs:
           done
 
           if [ $STALE_COUNT -gt 0 ]; then
-            gh issue create --title "Stale Fork Audit Report" --body-file $REPORT --label "maintenance"
+            gh issue create --repo RPDevs-Vault/ops-manager --title "Stale Fork Audit Report" --body-file $REPORT --label "maintenance"
           fi
