@@ -8,7 +8,7 @@ on:
 jobs:
   ping-endpoints:
     runs-on:
-      group: linux-builders
+      group: T430
       labels:
       - self-hosted
       - linux

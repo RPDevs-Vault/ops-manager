@@ -16,7 +16,7 @@ jobs:
   dispatch-container-builds:
     name: Trigger Container Manager Collection
     runs-on:
-      group: linux-builders
+      group: T430
       labels:
       - self-hosted
       - linux

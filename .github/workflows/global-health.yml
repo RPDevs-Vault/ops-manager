@@ -15,7 +15,7 @@ jobs:
   update-dashboard:
     name: Aggregate Manager Health
     runs-on:
-      group: linux-builders
+      group: T430
       labels:
       - self-hosted
       - linux

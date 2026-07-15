@@ -8,7 +8,7 @@ on:
 jobs:
   standardize:
     runs-on:
-      group: linux-builders
+      group: T430
       labels:
       - self-hosted
       - linux
