@@ -7,12 +7,7 @@ on:
 
 jobs:
   analyze:
-    runs-on:
-      group: T430
-      labels:
-      - self-hosted
-      - linux
-      - lightweight
+    runs-on: ubuntu-latest
     steps:
     - name: Analyze Notification Volume
       env:
@@ -52,6 +47,8 @@ jobs:
 
         gh issue create --repo RPDevs-Vault/ops-manager --title "Weekly Notification Heatmap" --body-file $REPORT --label "maintenance"
 
-        # Cache report locally
-        mkdir -p /home/runner/reports
-        cp $REPORT /home/runner/reports/notification_heatmap.md
+    - name: Archive Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: notification_heatmap
+        path: heatmap_report.md

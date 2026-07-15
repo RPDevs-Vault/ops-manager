@@ -7,12 +7,7 @@ on:
 
 jobs:
   ping-endpoints:
-    runs-on:
-      group: T430
-      labels:
-      - self-hosted
-      - linux
-      - lightweight
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4

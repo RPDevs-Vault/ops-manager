@@ -15,12 +15,7 @@ on:
 jobs:
   dispatch-container-builds:
     name: Trigger Container Manager Collection
-    runs-on:
-      group: T430
-      labels:
-      - self-hosted
-      - linux
-      - lightweight
+    runs-on: ubuntu-latest
     steps:
     - name: Emit Repository Dispatch
       env:

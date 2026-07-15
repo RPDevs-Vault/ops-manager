@@ -14,12 +14,7 @@ on:
 jobs:
   update-dashboard:
     name: Aggregate Manager Health
-    runs-on:
-      group: T430
-      labels:
-      - self-hosted
-      - linux
-      - lightweight
+    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:

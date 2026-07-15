@@ -7,12 +7,7 @@ on:
 
 jobs:
   enforce:
-    runs-on:
-      group: T430
-      labels:
-      - self-hosted
-      - linux
-      - lightweight
+    runs-on: ubuntu-latest
     steps:
     - name: Enforce Repository Policies
       env:

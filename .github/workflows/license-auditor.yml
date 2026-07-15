@@ -7,12 +7,7 @@ on:
 
 jobs:
   audit:
-    runs-on:
-      group: T430
-      labels:
-      - self-hosted
-      - linux
-      - lightweight
+    runs-on: ubuntu-latest
     steps:
     - name: Audit Missing Licenses
       env:
@@ -49,6 +44,8 @@ jobs:
           gh issue create --repo RPDevs-Vault/ops-manager --title "License Audit: $MISSING_COUNT projects missing licenses" --body-file "$REPORT" --label "governance"
         fi
 
-        # Cache report locally
-        mkdir -p /home/runner/reports
-        cp "$REPORT" /home/runner/reports/license_audit_report.md
+    - name: Archive Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: license_audit_report
+        path: license_audit_report.md
