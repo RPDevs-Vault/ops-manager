@@ -51,3 +51,7 @@ jobs:
         done <<< "$NOTIFS"
 
         gh issue create --repo RPDevs-Vault/ops-manager --title "Weekly Notification Heatmap" --body-file $REPORT --label "maintenance"
+
+        # Cache report locally
+        mkdir -p /home/runner/reports
+        cp $REPORT /home/runner/reports/notification_heatmap.md

@@ -56,3 +56,7 @@ jobs:
         if [ $STALE_COUNT -gt 0 ]; then
           gh issue create --repo RPDevs-Vault/ops-manager --title "Stale Fork Audit Report" --body-file $REPORT --label "maintenance"
         fi
+
+        # Cache report locally
+        mkdir -p /home/runner/reports
+        cp $REPORT /home/runner/reports/stale_report.md
